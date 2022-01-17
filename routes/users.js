@@ -229,13 +229,13 @@ router.get("/profile/user/comments",checkUser, async (req, res) => {
 
 router.put("/profile", checkUser, async (req, res) => {
   try {
-    const { firstName, lastName,  avatar, gender, mobileNumber, anotherMobileNumber } = req.body
+    const { firstName, lastName,  avatar, mobileNumber, anotherMobileNumber } = req.body
     const result = profileEditJoi.validate(req.body)
     if (result.error) return res.status(400).send(result.error.details[0].message)
 
     const user = await User.findByIdAndUpdate(
       req.userId,
-      { $set: { firstName, lastName, avatar, gender, mobileNumber, anotherMobileNumber } },
+      { $set: { firstName, lastName, avatar, mobileNumber, anotherMobileNumber } },
       { new: true }
     )
     res.json(user)

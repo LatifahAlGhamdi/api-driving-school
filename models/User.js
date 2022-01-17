@@ -85,7 +85,6 @@ const profileEditJoi = Joi.object({
   firstName: Joi.string().min(2).max(100),
   lastName: Joi.string().min(2).max(100).allow(""),
   avatar: Joi.string().uri().min(6).max(1000),
-  gender: Joi.string().valid("female", "male"),
   mobileNumber: Joi.string().max(10),
   anotherMobileNumber: Joi.string().max(10).allow(""),
 })
@@ -109,8 +108,6 @@ const profileCoachEditJoi = Joi.object({
   firstName: Joi.string().min(2).max(100),
   lastName: Joi.string().min(2).max(100).allow(""),
   avatar: Joi.string().uri().min(6).max(1000),
-  gender: Joi.string().valid("female", "male"),
-  dateOfBirth: Joi.date().raw(), //
   nationalIDOrIqamaNumber: Joi.string().max(10),
   mobileNumber: Joi.string().max(10),
   anotherMobileNumber: Joi.string().max(10).allow(""),
