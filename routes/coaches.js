@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const { Appointment, appointmentJoi } = require("../models/Appointment")
 const { Interview, interviewJoi } = require("../models/Interview")
-const { User, interviewVerifiedJoi, signUpCoachJoi, profileCoachEditJoi} = require("../models/User")
+const { User, interviewVerifiedJoi, signUpCoachJoi, profileCoachEditJoi, forgotPasswordJoi, resetPasswordJoi } = require("../models/User")
 const checkInspector = require("../middleware/checkInspector")
 const { Rating } = require("../models/Rating")
 const { Message } = require("../models/Message")
@@ -122,6 +122,66 @@ router.get("/verify_email/:token", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+router.post("/forgot-password", async (req, res)=>{
+  try{
+    const {email} = req.body
+    
+    const result= forgotPasswordJoi.validate(req.body)
+    if (result.error) return res.status(400).send(result.error.details[0].message)
+    
+    const userFound = await User.findOne({ email })
+    if (!userFound) return res.status(404).send("user not found")
+  
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "drivingschool970@gmail.com",
+        pass: "qwert567",
+      },
+    });
+    const token = jwt.sign({ id: userFound._id, forgotPassword:true }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "15d",
+    });
+    await transporter.sendMail({
+      from: `"Driving School"<drivingschool970@gmail.com>`,
+      to: email,
+      subject: "Email verification",
+      html: `hello, plase click on this link to reset your password.
+       <a href='http://localhost:3000/reset-password-coach/${token}'>Reset password</a>`,
+    });
+
+  }catch (error) {
+    res.status(500).send(error.message);
+  }
+})
+
+router.post("/reset-password/:token", async (req,res)=>{
+  try{
+  const result= resetPasswordJoi.validate(req.body)
+    if (result.error) return res.status(400).send(result.error.details[0].message)
+
+    const decryptedToken = jwt.verify(req.params.token, process.env.JWT_SECRET_KEY)
+
+    if (!decryptedToken.forgotPassword) return res.status(403).send("unauthorized action")
+    const userId = decryptedToken.id
+
+    const userFound = await User.findById(userId)
+    if (!userFound) return res.status(404).send("user not found")
+
+    const {password}=req.body
+
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+
+    await User.findByIdAndUpdate(userId, {$set:{password:hash}})
+    res.send("password reset")
+  }catch (error) {
+      res.status(500).send(error.message);
+    }
+} )
 
 router.put("/profile", checkCoach, async (req, res) => {
   try {

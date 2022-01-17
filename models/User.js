@@ -119,6 +119,14 @@ const interviewVerifiedJoi = Joi.object({
   interviewVerified: Joi.boolean(),
 })
 
+const forgotPasswordJoi = Joi.object({
+  email: Joi.string().email().required(),
+})
+
+const resetPasswordJoi = Joi.object({
+  password: Joi.string().min(8).max(120).required(),
+})
+
 const User = mongoose.model("User", userSchema)
 
 module.exports.User = User
@@ -128,3 +136,5 @@ module.exports.profileEditJoi = profileEditJoi
 module.exports.signUpCoachJoi = signUpCoachJoi
 module.exports.interviewVerifiedJoi = interviewVerifiedJoi
 module.exports.profileCoachEditJoi = profileCoachEditJoi
+module.exports.forgotPasswordJoi = forgotPasswordJoi
+module.exports.resetPasswordJoi = resetPasswordJoi

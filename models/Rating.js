@@ -13,7 +13,7 @@ const ratingSchema = new mongoose.Schema({
 })
 
 const ratingJoi = Joi.object({
-  rating: Joi.number().min(0).max(5).required(),
+  rating: Joi.number().min(0).max(50).required(),
 })
 
 const Rating = mongoose.model("Rating", ratingSchema)
