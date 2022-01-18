@@ -62,8 +62,8 @@ router.post("/signup-coach", async (req, res) => {
       port: 587,
       secure: false,
       auth: {
-        user: process.env.Email,
-        pass: process.env.Password,
+        user: "drivingschool970@gmail.com",
+        pass: "qwert567",
       },
     });
 
@@ -71,7 +71,7 @@ router.post("/signup-coach", async (req, res) => {
       expiresIn: "15d",
     });
     await transporter.sendMail({
-      from: `"Driving School"<${process.env.Email}>`,
+      from: `"Driving School"<drivingschool970@gmail.com>`,
       to: email,
       subject: "Email verification",
       html: `hello, plase click on this link to verify your email.
@@ -138,15 +138,15 @@ router.post("/forgot-password", async (req, res)=>{
       port: 587,
       secure: false,
       auth: {
-        user: process.env.Email,
-        pass: process.env.Password,
+        user: "drivingschool970@gmail.com",
+        pass: "qwert567",
       },
     });
     const token = jwt.sign({ id: userFound._id, forgotPassword:true }, process.env.JWT_SECRET_KEY, {
       expiresIn: "15d",
     });
     await transporter.sendMail({
-      from: `"Driving School"<${process.env.Email}>`,
+      from: `"Driving School"<drivingschool970@gmail.com>`,
       to: email,
       subject: "Email verification",
       html: `hello, plase click on this link to reset your password.
