@@ -11,9 +11,11 @@ const messageSchema = mongoose.Schema({
     type:mongoose.Types.ObjectId,
     ref:"User"
   },
-  numberOfHours:Number,
+  numberOfHours:{
+    type:String,
+    enum:["2"]
+  },
   time: String,
-  price: Number,
   comments: [
     {
       type: mongoose.Types.ObjectId,
@@ -23,14 +25,12 @@ const messageSchema = mongoose.Schema({
 })
 
 const messageJoi = Joi.object({
-  numberOfHours:Joi.number().min(0).max(30).required(),
-  time: Joi.string().max(20).required(),
-  price: Joi.number().min(0).max(5000).required(),
+  numberOfHours:Joi.string().valid("2").required(),
+  time: Joi.string().required(),
+  
 })
 const messageEditJoi = Joi.object({
-  numberOfHours:Joi.number().min(0).max(30),
   time: Joi.string(),
-  price: Joi.number().min(0).max(5000),
 })
 
 const Message = mongoose.model("Message", messageSchema)

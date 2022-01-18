@@ -375,7 +375,7 @@ router.put("/:coachId", checkInspector, validateId("coachId"), async (req, res) 
 /*----------------------------------- Appointments --------------------------------------------------------*/
 router.post("/:coachId/appointment", checkUser, validateId("coachId"), async (req, res) => {
   try {
-    const { name, skill } = req.body
+    const { name} = req.body
     const result = appointmentJoi.validate(req.body)
     if (result.error) return res.status(400).send(result.error.details[0].message)
 
@@ -384,7 +384,6 @@ router.post("/:coachId/appointment", checkUser, validateId("coachId"), async (re
 
     const newAppointment = new Appointment({
       name,
-      skill,
       userId: req.userId,
       coachId: req.params.coachId,
     })

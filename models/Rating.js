@@ -5,7 +5,11 @@ const ratingSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
-  rating: Number,
+  numberOfHours:{
+    type:String,
+    enum:["6","15","30"]
+  },
+  price: Number,
   coachId :{
     type:mongoose.Types.ObjectId,
     ref:"User"
@@ -13,7 +17,8 @@ const ratingSchema = new mongoose.Schema({
 })
 
 const ratingJoi = Joi.object({
-  rating: Joi.number().min(0).max(50).required(),
+  numberOfHours: Joi.string().valid("6","15","30").required(),
+  price: Joi.number().min(0).max(5000).required(),
 })
 
 const Rating = mongoose.model("Rating", ratingSchema)

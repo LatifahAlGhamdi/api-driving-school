@@ -9,10 +9,7 @@ const appointmentSchema = mongoose.Schema({
     ref: "User",
   },
   name: String,
-  skill:{
-    type:String,
-    enum:["I have a skill", "I don't have a skill"]
-  },
+  
   coachId: {
     type: mongoose.Types.ObjectId,
     ref: "User",
@@ -21,7 +18,6 @@ const appointmentSchema = mongoose.Schema({
 
 const appointmentJoi = Joi.object({
   name: Joi.string().min(2).max(120).required(),
-  skill:Joi.string().valid("I have a skill", "I don't have a skill").required(),
 })
 
 const appointmentEditJoi = Joi.object({

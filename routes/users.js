@@ -354,13 +354,14 @@ router.post("/users/:userId/rating", checkCoach, validateId("userId"), async (re
     console.log(user)
     console.log(coach)
 
-    const { rating } = req.body
+    const { numberOfHours, price } = req.body
 
     const result = ratingJoi.validate(req.body)
     if (result.error) return res.status(400).send(result.error.details[0].message)
 
     const newRating = new Rating({
-      rating,
+      numberOfHours,
+      price,
       userId: req.params.userId,
       coachId: req.userId,
     })
@@ -382,7 +383,7 @@ router.post("/users/:userId/rating", checkCoach, validateId("userId"), async (re
 
 router.post("/users/:userid/message", checkCoach, validateId("userid"), async (req, res) => {
   try {
-    const { numberOfHours, time, price } = req.body
+    const { numberOfHours, time } = req.body
     const result = messageJoi.validate(req.body)
     if (result.error) return res.status(400).send(result.error.details[0].message)
 
@@ -397,7 +398,7 @@ router.post("/users/:userid/message", checkCoach, validateId("userid"), async (r
       coachId: req.userId,
       numberOfHours,
       time,
-      price,
+      
     })
 
     const messageFound = user.messages.find(messageObject => messageObject.coachId == req.userId)
@@ -420,7 +421,7 @@ router.post("/users/:userid/message", checkCoach, validateId("userid"), async (r
 
 router.put("/users/:userId/message/:messageId", validateId("userId", "messageId"), async (req, res) => {
   try {
-    const {numberOfHours, time, price } = req.body
+    const { time} = req.body
     const result = messageEditJoi.validate(req.body)
     if (result.error) return res.status(400).send(result.error.details[0].message)
     const user = await User.findById(req.params.userId)
@@ -431,7 +432,7 @@ router.put("/users/:userId/message/:messageId", validateId("userId", "messageId"
 
     const updatedMessage = await Message.findByIdAndUpdate(
       req.params.messageId,
-      { $set: {numberOfHours, time, price } },
+      { $set: { time } },
       { new: true }
       
     )
