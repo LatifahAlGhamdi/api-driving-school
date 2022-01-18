@@ -21,6 +21,6 @@ app.use("/api/inspectors", inspectors)
 app.use("/api/coaches", coaches)
 const port = 5000
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log("Server is listening on port", port)
 })
