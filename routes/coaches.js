@@ -5,7 +5,7 @@ const checkUser = require("../middleware/checkUser")
 const validateId = require("../middleware/validateId")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-const { Appointment, appointmentJoi } = require("../models/Appointment")
+const { Appointment, appointmentJoi, appointmentEditJoi } = require("../models/Appointment")
 const { Interview, interviewJoi } = require("../models/Interview")
 const { User, interviewVerifiedJoi, signUpCoachJoi, profileCoachEditJoi, forgotPasswordJoi, resetPasswordJoi } = require("../models/User")
 const checkInspector = require("../middleware/checkInspector")
@@ -375,7 +375,7 @@ router.put("/:coachId", checkInspector, validateId("coachId"), async (req, res) 
 /*----------------------------------- Appointments --------------------------------------------------------*/
 router.post("/:coachId/appointment", checkUser, validateId("coachId"), async (req, res) => {
   try {
-    const { name } = req.body
+    const { name, skill } = req.body
     const result = appointmentJoi.validate(req.body)
     if (result.error) return res.status(400).send(result.error.details[0].message)
 
@@ -384,6 +384,7 @@ router.post("/:coachId/appointment", checkUser, validateId("coachId"), async (re
 
     const newAppointment = new Appointment({
       name,
+      skill,
       userId: req.userId,
       coachId: req.params.coachId,
     })
@@ -434,7 +435,7 @@ router.put(
     try {
       const { name } = req.body
 
-      const result = appointmentJoi.validate(req.body)
+      const result = appointmentEditJoi.validate(req.body)
       if (result.error) return res.status(400).send(result.error.details[0].message)
 
       const coach = await User.findById(req.params.coachId)
