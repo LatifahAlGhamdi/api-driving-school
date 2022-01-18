@@ -9,7 +9,7 @@ const inspectors = require("./routes/inspectors")
 const coaches = require("./routes/coaches")
 const cors = require("cors")
 mongoose
-  .connect("mongodb://localhost:27017/finalProjectDB")
+  .connect(`mongodb+srv://Latifah000:${process.env.MONGODB_PASSWORD}@cluster0.ahz0n.mongodb.net/finalProjectDB?retryWrites=true&w=majority`)
   .then(() => console.log("connected MongoDB"))
   .catch(error => console.log("Error to conncted MongoDB", error))
 
