@@ -15,7 +15,7 @@ mongoose
 
 const app = express()
 app.use(express.json())
-app.use(cors({origin:"*"}))
+app.use(cors())
 app.use("/api/auth", users)
 app.use("/api/inspectors", inspectors)
 app.use("/api/coaches", coaches)
