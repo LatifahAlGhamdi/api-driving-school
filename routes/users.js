@@ -401,9 +401,6 @@ router.post("/users/:userid/message", checkCoach, validateId("userid"), async (r
       
     })
 
-    const messageFound = user.messages.find(messageObject => messageObject.coachId == req.userId)
-    console.log(messageFound)
-    if (messageFound) return res.status(400).send("coach already messaged this user")
     await newMessage.save()
     
     await User.findByIdAndUpdate( req.params.userid,{ $push: { messages: newMessage._id } },{ new: true })
@@ -419,28 +416,28 @@ router.post("/users/:userid/message", checkCoach, validateId("userid"), async (r
 //   res.json(message)
 // })
 
-router.put("/users/:userId/message/:messageId", validateId("userId", "messageId"), async (req, res) => {
-  try {
-    const { time} = req.body
-    const result = messageEditJoi.validate(req.body)
-    if (result.error) return res.status(400).send(result.error.details[0].message)
-    const user = await User.findById(req.params.userId)
-    if (!user) return res.status(404).send("user is not found")
+// router.put("/users/:userId/message/:messageId", validateId("userId", "messageId"), async (req, res) => {
+//   try {
+//     const { time} = req.body
+//     const result = messageEditJoi.validate(req.body)
+//     if (result.error) return res.status(400).send(result.error.details[0].message)
+//     const user = await User.findById(req.params.userId)
+//     if (!user) return res.status(404).send("user is not found")
 
-    const message = await Message.findById(req.params.messageId)
-    if (!message) return res.status(404).send("message is not found")
+//     const message = await Message.findById(req.params.messageId)
+//     if (!message) return res.status(404).send("message is not found")
 
-    const updatedMessage = await Message.findByIdAndUpdate(
-      req.params.messageId,
-      { $set: { time } },
-      { new: true }
+//     const updatedMessage = await Message.findByIdAndUpdate(
+//       req.params.messageId,
+//       { $set: { time } },
+//       { new: true }
       
-    )
-    res.json(updatedMessage)
-  } catch (error) {
-    res.status(500).send(error.message)
-  }
-})
+//     )
+//     res.json(updatedMessage)
+//   } catch (error) {
+//     res.status(500).send(error.message)
+//   }
+// })
 
 router.delete("/users/:userId/message/:messageId", validateId("userId", "messageId"), async (req, res) => {
   try {

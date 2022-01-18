@@ -29,12 +29,12 @@ const messageJoi = Joi.object({
   time: Joi.string().required(),
   
 })
-const messageEditJoi = Joi.object({
-  time: Joi.string(),
-})
+// const messageEditJoi = Joi.object({
+//   time: Joi.string(),
+// })
 
 const Message = mongoose.model("Message", messageSchema)
 
 module.exports.Message = Message
 module.exports.messageJoi = messageJoi
-module.exports.messageEditJoi = messageEditJoi
+// module.exports.messageEditJoi = messageEditJoi
