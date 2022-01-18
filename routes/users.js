@@ -387,7 +387,7 @@ router.post("/users/:userid/message", checkCoach, validateId("userid"), async (r
     const result = messageJoi.validate(req.body)
     if (result.error) return res.status(400).send(result.error.details[0].message)
 
-    const user = await User.findById(req.params.userid).populate("messages" )
+    const user = await User.findById(req.params.userid)
   if (!user) return res.status(404).send("user is not found")
 
     const coach = await User.findById(req.userId)
@@ -400,6 +400,7 @@ router.post("/users/:userid/message", checkCoach, validateId("userid"), async (r
       time,
       
     })
+
 
     await newMessage.save()
     
