@@ -187,6 +187,8 @@ router.post("/forgot-password", async (req, res)=>{
     
     const userFound = await User.findOne({ email })
     if (!userFound) return res.status(404).send("user not found")
+
+    
   
     const transporter = nodemailer.createTransport({
       service: "gmail",
