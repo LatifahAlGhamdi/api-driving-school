@@ -75,7 +75,7 @@ router.post("/signup-coach", async (req, res) => {
       to: email,
       subject: "Email verification",
       html: `hello, plase click on this link to verify your email.
-       <a href='http://localhost:3000/verify_email_coach/${token}'> verify email</a>`,
+       <a href='https://react-driving-school.herokuapp.com/verify_email_coach/${token}'> verify email</a>`,
     });
 
     await coach.save()
@@ -150,7 +150,7 @@ router.post("/forgot-password", async (req, res)=>{
       to: email,
       subject: "Email verification",
       html: `hello, plase click on this link to reset your password.
-       <a href='http://localhost:3000/reset-password-coach/${token}'>Reset password</a>`,
+       <a href='https://react-driving-school.herokuapp.com/reset-password-coach/${token}'>Reset password</a>`,
     });
 
   }catch (error) {

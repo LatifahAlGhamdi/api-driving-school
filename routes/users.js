@@ -127,7 +127,7 @@ router.post("/signup", async (req, res) => {
       to: email,
       subject: "Email verification",
       html: `hello, plase click on this link to verify your email.
-       <a href='http://localhost:3000/verify_email/${token}'> verify email</a>`,
+       <a href='https://react-driving-school.herokuapp.com/verify_email/${token}'> verify email</a>`,
     });
     await user.save()
     delete user._doc.password
@@ -188,7 +188,7 @@ router.post("/forgot-password", async (req, res)=>{
     const userFound = await User.findOne({ email })
     if (!userFound) return res.status(404).send("user not found")
 
-    
+
   
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -207,7 +207,7 @@ router.post("/forgot-password", async (req, res)=>{
       to: email,
       subject: "Email verification",
       html: `hello, plase click on this link to reset your password.
-       <a href='http://localhost:3000/reset-password/${token}'>Reset password</a>`,
+       <a href='https://react-driving-school.herokuapp.com/reset-password/${token}'>Reset password</a>`,
     });
 
   }catch (error) {
