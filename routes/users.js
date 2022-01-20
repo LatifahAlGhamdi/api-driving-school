@@ -209,7 +209,7 @@ router.post("/forgot-password", async (req, res)=>{
       html: `hello, plase click on this link to reset your password.
        <a href='https://react-driving-school.herokuapp.com/reset-password/${token}'>Reset password</a>`,
     });
-
+    res.send("forgot password link sent")
   }catch (error) {
     res.status(500).send(error.message);
   }

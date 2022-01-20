@@ -152,7 +152,7 @@ router.post("/forgot-password", async (req, res)=>{
       html: `hello, plase click on this link to reset your password.
        <a href='https://react-driving-school.herokuapp.com/reset-password-coach/${token}'>Reset password</a>`,
     });
-
+    res.send("forgot password link sent")
   }catch (error) {
     res.status(500).send(error.message);
   }
@@ -426,34 +426,34 @@ router.get("/profile/comments",checkUser, async (req, res) => {
     .select("-__v")
   res.json(comment)
 })
-router.put(
-  "/:coachId/appointment/:appointmentId",
-  checkUser,
-  validateId("coachId", "appointmentId"),
-  async (req, res) => {
-    try {
-      const { name } = req.body
+// router.put(
+//   "/:coachId/appointment/:appointmentId",
+//   checkUser,
+//   validateId("coachId", "appointmentId"),
+//   async (req, res) => {
+//     try {
+//       const { name } = req.body
 
-      const result = appointmentEditJoi.validate(req.body)
-      if (result.error) return res.status(400).send(result.error.details[0].message)
+//       const result = appointmentEditJoi.validate(req.body)
+//       if (result.error) return res.status(400).send(result.error.details[0].message)
 
-      const coach = await User.findById(req.params.coachId)
-      if (!coach) return res.status(404).send("coach is not found")
+//       const coach = await User.findById(req.params.coachId)
+//       if (!coach) return res.status(404).send("coach is not found")
 
-      const appointment = await Appointment.findById(req.params.appointmentId)
-      if (!appointment) return res.status(404).send("appointment is not found")
+//       const appointment = await Appointment.findById(req.params.appointmentId)
+//       if (!appointment) return res.status(404).send("appointment is not found")
 
-      const updatedAppointment = await Appointment.findByIdAndUpdate(
-        req.params.appointmentId,
-        { $set: { name } },
-        { new: true }
-      )
-      res.json(updatedAppointment)
-    } catch (error) {
-      res.status(500).send(error.message)
-    }
-  }
-)
+//       const updatedAppointment = await Appointment.findByIdAndUpdate(
+//         req.params.appointmentId,
+//         { $set: { name } },
+//         { new: true }
+//       )
+//       res.json(updatedAppointment)
+//     } catch (error) {
+//       res.status(500).send(error.message)
+//     }
+//   }
+// )
 router.delete(
   "/:coachId/appointment/:appointmentId",
   checkUser,
