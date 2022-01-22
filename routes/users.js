@@ -264,12 +264,7 @@ router.get("/profile/user/appointments", checkUser, async (req, res) => {
 
 router.get("/profile/user/ratings", checkUser, async (req, res) => {
   const rating = await Rating.find({ userId: req.userId })
-    .populate({
-      path: "coachId",
-      populate: {
-        path: "ratings",
-      },
-    })
+    .populate("coachId")
     .select("-__v")
   res.json(rating)
 })
