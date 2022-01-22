@@ -38,14 +38,14 @@ router.post("/add-inspector", checkAdmin, async (req, res) => {
   }
 })
 
-router.get("/profile", checkInspector, async (req, res) => {
-  try {
-    const inspector = await User.findById(req.userId).select("-__v -password")
-    res.json(inspector)
-  } catch (error) {
-    res.status(500).send(error.message)
-  }
-})
+// router.get("/profile", checkInspector, async (req, res) => {
+//   try {
+//     const inspector = await User.findById(req.userId).select("-__v -password")
+//     res.json(inspector)
+//   } catch (error) {
+//     res.status(500).send(error.message)
+//   }
+// })
 
 // router.put("/profile", checkInspector, async (req, res) => {
 //   try {
