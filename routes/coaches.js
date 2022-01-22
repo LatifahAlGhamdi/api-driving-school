@@ -295,13 +295,13 @@ router.get("/interview", checkInspector, async (req, res) => {
   res.json(coach)
 })
 
-router.get("/:coachId/interview", checkInspector, validateId("coachId"), async (req, res) => {
-  const coach = await User.findById(req.params.coachId)
-  if (!coach) return res.status(404).send("coach is not found")
+// router.get("/:coachId/interview", checkInspector, validateId("coachId"), async (req, res) => {
+//   const coach = await User.findById(req.params.coachId)
+//   if (!coach) return res.status(404).send("coach is not found")
 
-  const interview = await Interview.find().select("-__v")
-  res.json(interview)
-})
+//   const interview = await Interview.find().select("-__v")
+//   res.json(interview)
+// })
 
 router.put(
   "/:coachId/interview/:interviewId",
